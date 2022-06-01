@@ -1,10 +1,11 @@
 import sys
+from numpy import int64
 import pandas as pd
 from sqlalchemy import create_engine
 
 
 def load_data(messages_filepath:str, categories_filepath:str) -> pd.DataFrame:
-    '''                                                         #!!! Should not be Dataframe, yet already convert them into values
+    '''                                                         
         Load data from two file paths, merge them into a single data frame.
 
         Args
@@ -45,7 +46,13 @@ def clean_data(df:pd.DataFrame) -> pd.DataFrame:
     categories.replace(r'\D', '',regex=True, inplace=True)
 
     # Combining previous dataframe with new categories dataframe
-    df = pd.concat([df.drop(columns=['categories']), categories], axis=1)
+    df = pd.concat([df.drop(columns=['categories']), categories.astype(int)], axis=1)
+
+    # In 'related' column replace 2 with 0 because in both cases all the other column values are zero
+    df[df['related'] == 2] = 0
+
+    # Remove 'child_alone' column becasue it contains only zeros
+    df = df.drop(columns=['child_alone'])
 
     # Remove duplicate rows
     return df.drop_duplicates()
@@ -64,7 +71,7 @@ def save_data(df: pd.DataFrame, database_filename:str) -> None:
     engine = create_engine('sqlite:///'+database_filename)
 
     #save data to database
-    df.to_sql('messages', engine, index=False)
+    df.to_sql('messages', engine, index=False, if_exists='replace')
 
 
 def main():
