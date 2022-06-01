@@ -61,10 +61,7 @@ def index():
     genre_counts = df.groupby('genre').count()['message']
     genre_names = list(genre_counts.index)
     
-
-    
     # create visuals
-    # TODO: Below is an example - modify to create your own visuals
     graphs = [
                 #GRAPH 1
                 {
