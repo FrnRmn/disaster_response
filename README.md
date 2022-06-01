@@ -26,7 +26,7 @@ The model used is a Random Forest Classifier and it is included in a full-stack 
 
 ### Files Description and Useful Commands
 - The training data are contained in the /data folder. To preprocess the data and save them in a database file called "DisasterResponse" use <code>python data/process_data.py data/disaster_messages.csv data/disaster_categories.csv data/DisasterResponse.dby</code> in the project's root directory.
-- The script for train the model pipeline are contained in the /models folder. To train the model and save it as a piclke file called "classifier" use <code>python models/train_classifier.py data/DisasterResponse.db models/classifier.pkl</code>
+- The script for training the model pipeline is contained in the /models folder. To train the model and save it as a piclke file called "classifier" use <code>python models/train_classifier.py data/DisasterResponse.db models/classifier.pkl</code>
 - The webb app is contained in the /app folder. To launch the application use <code>python run.py</code>.
 
 
