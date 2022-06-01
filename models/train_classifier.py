@@ -7,7 +7,6 @@ import re
 
 from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
-from nltk.stem.porter import PorterStemmer
 from nltk.stem.wordnet import WordNetLemmatizer
 import nltk
 nltk.download('punkt')
@@ -46,18 +45,12 @@ def load_data(database_filepath: str) -> tuple[np.ndarray, np.ndarray, list]:
     X = df.loc[:,'message']
     Y = df.iloc[:,4:]
 
-    # Remove 'child_alone' column becasue it contains only zeros
-    Y = Y.drop(columns=['child_alone'])
-
     # Extract targets category names
     category_names = Y.columns.tolist()
 
-    # In 'related' column replace 2 with 0 because in both cases all the other column values are zero
-    Y[Y['related'] == '2'] = '0'
-
     # Extract values from dataframes
     X = X.values
-    Y = Y.astype(int).values
+    Y = Y.values
 
     return X, Y, category_names
 
@@ -85,9 +78,6 @@ def tokenize(text:str)->list[str]:
     # Lemmatization
     tokens = [WordNetLemmatizer().lemmatize(token) for token in tokens]
     
-    # Stemming
-    tokens = [PorterStemmer().stem(token) for token in tokens]  
-    
     return tokens
 
 
@@ -114,13 +104,13 @@ def build_model():
 
     # Define different scores for the grid search
     scorers = {
-    'precision': make_scorer(precision_score, average='weighted'),
-    'recall': make_scorer(recall_score, average='weighted'),
+    'precision': make_scorer(precision_score, average='micro'),
+    'recall': make_scorer(recall_score, average='micro'),
     'accuracy': make_scorer(accuracy_score),
     }
 
     # Define the grid search
-    model = GridSearchCV(pipeline, param_grid=parameters, scoring=scorers, refit='recall', verbose=2, cv=3)
+    model = GridSearchCV(pipeline, param_grid=parameters, scoring=scorers, refit='accuracy', verbose=2, cv=3)
 
     return model
 
