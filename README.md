@@ -19,17 +19,17 @@ The model used is a Random Forest Classifier and it is included in a full-stack 
 
 
 ### Files Description
-- app<br>
+- [app](https://github.com/FrnRmn/disaster_response_classification/tree/main/app)<br>
 | - template<br>
 | |- master.html    # main page of web app<br>
 | |- go.html    # classification result page of web app<br>
 |- run.py   # launcher fo the web app<br>
-- data<br>
+- [data](https://github.com/FrnRmn/disaster_response_classification/tree/main/data)<br>
 |- disaster_categories.csv    # data to process<br>
 |- disaster_messages.csv    # data to process<br>
 |- process_data.py    # data preprocessing and database creation<br>
 |- disaster_example.gif   # gif preview<br>
-- models<br>
+- [models](https://github.com/FrnRmn/disaster_response_classification/tree/main/models)<br>
 |- train_classifier.py    # model training, evaluation and saving<br>
 - README.md   # the current file<br>
 - requiriements.txt   #contains dependencies<br>
